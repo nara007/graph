@@ -32,6 +32,10 @@ define(["app/node","app/literal"], function (Node,Literal) {
 
     };
 
+    /**
+     * todu
+     * @param graphData
+     */
     DrawGraph.prototype.draw= function (graphData) {
 
         var width=$("#active").width()/3;
