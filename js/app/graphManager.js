@@ -230,11 +230,11 @@ define(["raphael","jquery"], function (raphael,$){
 
             if(node2.getType()=="blank")
             {
-                this.canvas.path(path).attr({'stroke-width':2});
+                return this.canvas.path(path).attr({'stroke-width':2});
             }
             else
             {
-                this.canvas.path(path).attr({'stroke-width':2,'arrow-end':'classic-wide-long'});
+                return this.canvas.path(path).attr({'stroke-width':2,'arrow-end':'classic-wide-long'});
             }
         }
     };
@@ -313,10 +313,13 @@ define(["raphael","jquery"], function (raphael,$){
                 stroke:"#DDDDDD"
             }, 150);
         });
-        arrowCursor.click(function () {
-            alert("abc");
-        });
+        //arrowCursor.click(function () {
+        //    alert("abc");
+        //});
+
+        return arrowCursor;
     };
+
 
     return GraphManager.getInstance();
 });

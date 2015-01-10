@@ -16,8 +16,11 @@ define(function (require) {
         this.type="literal";
         this.width=160;
         this.height=30;
+        this.self=GraphManager.paint(this.location,this.type);
+        this.text=null;
+        this.line=null;
+        this.predicateText=null;
 
-        GraphManager.paint(this.location,this.type);
         //GraphManager.line(predecessor,this);
     };
 
@@ -47,6 +50,50 @@ define(function (require) {
     Literal.prototype.setLocation= function (location) {
         this.location=location;
         return this;
+    };
+
+    Literal.prototype.setText= function (text) {
+        if(this.text==null)
+        {
+            this.text=GraphManager.text(this.location,text);
+        }
+        else
+        {
+            this.text.attr({text:text});
+        }
+        return this;
+    };
+
+    Literal.prototype.show= function () {
+
+        this.self.show();
+        this.text.show();
+        this.line.show();
+        this.predicateText.show();
+        return this;
+    };
+
+    Literal.prototype.hide= function () {
+        this.self.hide();
+        this.text.hide();
+        this.line.hide();
+        this.predicateText.hide();
+        return this;
+    };
+
+    Literal.prototype.setLine=function(line){
+        this.line=line;
+        return this;
+    };
+
+    Literal.prototype.setPredicateText=function(predicateText){
+        this.predicateText=predicateText;
+        return this;
+    };
+
+    Literal.prototype.getRaphaelObject= function () {
+
+        return this.self;
     };
     return Literal;
 

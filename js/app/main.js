@@ -90,71 +90,85 @@ require(["jquery", "bootstrap","app/drawGraph","tinyscrollbar","app/node","app/g
     $(document).bind('contextmenu', function (e) {
         e.preventDefault();
     });
+
+    var data=[{subject:"http://abc",predicate:"en",object:"abcen"},
+        {subject:"http://abc",predicate:"fr",object:"abcfr"},
+        {subject:"http://abc",predicate:"sl",object:"abcsl"},
+        {subject:"http://abc",predicate:"es",object:"abces"},
+        {subject:"http://abc",predicate:"it",object:"abcit"},
+        {subject:"http://abc",predicate:"cn",object:"abccn"},
+        {subject:"http://abc",predicate:"de",object:"abcde"},
+        {subject:"http://abc",predicate:"zx",object:"abczx"},
+        {subject:"http://abc",predicate:"zd",object:"abczd"},
+        {subject:"http://abc",predicate:"ze",object:"abcze"},
+        {subject:"http://abc",predicate:"zf",object:"abczf"},
+        {subject:"http://abc",predicate:"zg",object:"abczg"},
+        {subject:"http://abc",predicate:"zh",object:"abczh"},
+        {subject:"http://abc",predicate:"zi",object:"abczi"},
+        {subject:"http://abc",predicate:"zj",object:"abczj"},
+        {subject:"http://abc",predicate:"zk",object:"abczk"},
+        {subject:"http://abc",predicate:"zl",object:"abczl"},
+        {subject:"http://abc",predicate:"zm",object:"abczm"},
+        {subject:"http://abc",predicate:"zn",object:"abczn"}];
+
     //console.log(DrawGraph);
-    //DrawGraph.draw(null);
-    ////$("#literalZone").tinyscrollbar();
+    DrawGraph.drawLiterals(data);
 
-    var node1=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"});
-    //var node2=new Node({location:{x:500,y:600},type:"history"});
-    //var node3=new Node({location:{x:500,y:500},type:"active"});
-    var node4=new Literal({location:{x:$(window).width()/1.6,y:300},type:"literal"});
-    var node5=new Literal({location:{x:$(window).width()/1.6,y:350},type:"literal"});
-    var node6=new Literal({location:{x:$(window).width()/1.6,y:400},type:"literal"});
-    var node7=new Literal({location:{x:$(window).width()/1.6,y:450},type:"literal"});
-    var node8=new Literal({location:{x:$(window).width()/1.6,y:500},type:"literal"});
-    var node9=new Literal({location:{x:$(window).width()/1.6,y:550},type:"literal"});
-    var node10=new Literal({location:{x:$(window).width()/1.6,y:600},type:"literal"});
-
-    var node11=new Node({location:{x:200,y:150},type:"history"});
-    var node12=new Node({location:{x:200,y:250},type:"history"});
-    var node13=new Node({location:{x:200,y:350},type:"history"});
-    var node14=new Node({location:{x:200,y:450},type:"history"});
-
-
-    var node15=new Node({location:{x:1000,y:150},type:"blank"});
-    //node1.addNode(node2,{predicate:"place"}).addNode(node3,{predicate:"shijian"});
-    //node3.addLiteral(node4,{predicate:"xiaoming"}).addLiteral(node5,{predicate:"xiaohong"});
-    //node2.addNode(node3,{predicate:"shijian"});
-
-    var node16=new Node({location:{x:1200,y:150},type:"object"});
-    var node17=new Node({location:{x:1200,y:250},type:"object"});
-    var node18=new Node({location:{x:1200,y:350},type:"object"});
-    var node19=new Node({location:{x:1200,y:450},type:"object"});
-    var node20=new Node({location:{x:1200,y:550},type:"object"});
-
-    GraphManager.line(node1,node4);
-    GraphManager.line(node1,node5);
-    GraphManager.line(node1,node6);
-    GraphManager.line(node1,node7);
-    GraphManager.line(node1,node8);
-    GraphManager.line(node1,node9);
-    GraphManager.line(node1,node10);
-
-    GraphManager.line(node1,node15);
-
-    GraphManager.line(node15,node16);
-    GraphManager.line(node15,node17);
-    GraphManager.line(node15,node18);
-    GraphManager.line(node15,node19);
-    GraphManager.line(node15,node20);
-
-    GraphManager.line(node14,node13);
-    GraphManager.line(node13,node12);
-    GraphManager.line(node12,node11);
-    GraphManager.line(node11,node1);
-
-
-    GraphManager.arrow("up",{x:200,y:100});
-    GraphManager.arrow("down",{x:200,y:500});
-
-    GraphManager.arrow("up",{x:$(window).width()/1.6,y:250});
-    GraphManager.arrow("down",{x:$(window).width()/1.6,y:650});
-
-    GraphManager.arrow("up",{x:1200,y:100});
-    GraphManager.arrow("down",{x:1200,y:600});
-
-    //GraphManager.line(node1,node2);
-    node1.setText("abc");
-    node1.setText("");
-    node1.setText("abcefg");
+    //var node1=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"});
+    //var node4=new Literal({location:{x:$(window).width()/1.6,y:300},type:"literal"});
+    //var node5=new Literal({location:{x:$(window).width()/1.6,y:350},type:"literal"});
+    //var node6=new Literal({location:{x:$(window).width()/1.6,y:400},type:"literal"});
+    //var node7=new Literal({location:{x:$(window).width()/1.6,y:450},type:"literal"});
+    //var node8=new Literal({location:{x:$(window).width()/1.6,y:500},type:"literal"});
+    //var node9=new Literal({location:{x:$(window).width()/1.6,y:550},type:"literal"});
+    //var node10=new Literal({location:{x:$(window).width()/1.6,y:600},type:"literal"});
+    //
+    //var node11=new Node({location:{x:200,y:150},type:"history"});
+    //var node12=new Node({location:{x:200,y:250},type:"history"});
+    //var node13=new Node({location:{x:200,y:350},type:"history"});
+    //var node14=new Node({location:{x:200,y:450},type:"history"});
+    //
+    //
+    //var node15=new Node({location:{x:1000,y:150},type:"blank"});
+    //
+    //var node16=new Node({location:{x:1200,y:150},type:"object"});
+    //var node17=new Node({location:{x:1200,y:250},type:"object"});
+    //var node18=new Node({location:{x:1200,y:350},type:"object"});
+    //var node19=new Node({location:{x:1200,y:450},type:"object"});
+    //var node20=new Node({location:{x:1200,y:550},type:"object"});
+    //
+    //GraphManager.line(node1,node4);
+    //GraphManager.line(node1,node5);
+    //GraphManager.line(node1,node6);
+    //GraphManager.line(node1,node7);
+    //GraphManager.line(node1,node8);
+    //GraphManager.line(node1,node9);
+    //GraphManager.line(node1,node10);
+    //
+    //GraphManager.line(node1,node15);
+    //
+    //GraphManager.line(node15,node16);
+    //GraphManager.line(node15,node17);
+    //GraphManager.line(node15,node18);
+    //GraphManager.line(node15,node19);
+    //GraphManager.line(node15,node20);
+    //
+    //GraphManager.line(node14,node13);
+    //GraphManager.line(node13,node12);
+    //GraphManager.line(node12,node11);
+    //GraphManager.line(node11,node1);
+    //
+    //
+    //GraphManager.arrow("up",{x:200,y:100});
+    //GraphManager.arrow("down",{x:200,y:500});
+    //
+    //GraphManager.arrow("up",{x:$(window).width()/1.6,y:250});
+    //GraphManager.arrow("down",{x:$(window).width()/1.6,y:650});
+    //
+    //GraphManager.arrow("up",{x:1200,y:100});
+    //GraphManager.arrow("down",{x:1200,y:600});
+    //
+    //node1.setText("abc");
+    //node1.setText("");
+    //node1.setText("abcefg");
 });

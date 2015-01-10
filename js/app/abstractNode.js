@@ -57,5 +57,24 @@ define(function () {
         throw new Error("This method must be overridden !");
     };
 
+    AbstractNode.prototype.show= function () {
+        throw new Error("This method must be overridden !");
+    };
+    AbstractNode.prototype.hide= function () {
+        throw new Error("This method must be overridden !");
+    };
+
+    AbstractNode.prototype.getRaphaelObject= function () {
+        throw new Error("This method must be overridden !");
+    };
+
+    AbstractNode.prototype.setLine= function (line) {
+        throw new Error("This method must be overridden !");
+    };
+
+    AbstractNode.prototype.setPredicateText= function (predicateText) {
+        throw new Error("This method must be overridden !");
+    };
+
     return AbstractNode;
 });
