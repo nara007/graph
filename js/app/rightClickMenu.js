@@ -81,8 +81,8 @@ define(function (require) {
             fill:'black',
             "font-size": 14});
 
-        var text_3 = paper.text(e.pageX + 50, e.pageY + 75, "Cancel");
-        text_3.attr({"font-family": "Consolas",
+        var text_Cancel = paper.text(e.pageX + 50, e.pageY + 75, "Cancel");
+        text_Cancel.attr({"font-family": "Consolas",
             "text-anchor":"start",
             fill:'black',
             "font-size": 14});
@@ -93,7 +93,7 @@ define(function (require) {
         group.push(menu);
         group.push(text_1);
         group.push(text_2);
-        group.push(text_3);
+        group.push(text_Cancel);
         /**
          * set hover effect of items of the contextmenu
          * @param target (items of contextmenu)
@@ -130,7 +130,6 @@ define(function (require) {
             removeMenu();
         });
         sub_group_3.click(function () {
-            alert("TODU");
             removeMenu();
         });
     };

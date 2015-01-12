@@ -6,7 +6,8 @@ define(function (require) {
         GraphManager=require("app/graphManager"),
         $=require("jquery"),
         HashtablePlugin=require("Hashtabel"),
-        MenuManager=require("app/rightClickMenu");
+        MenuManager=require("app/rightClickMenu"),
+        Communication=require("app/communication");
     /**
      *
      * @param property type=object,contains location,type("history","active","object")
@@ -20,6 +21,9 @@ define(function (require) {
         this.objects=new $.Hashtable();
         this.text=null;
         this.self=null;
+        this.line=null;
+        this.predicateText=null;
+        this.id=null;
         if(this.type=="active")
         {
             this.width=160;
@@ -49,12 +53,26 @@ define(function (require) {
         }
         var that=this;
         this.self=GraphManager.paint(this.location,this.type);
+        /**
+         * right click event
+         */
         this.self.attr("cursor","pointer").mouseup(function (e) {
             if(e.which==3)
             {
                 MenuManager.createMenu.call(that.self,e);
             }
         });
+
+        /**
+         * double click make current object node active
+         */
+        if(this.type=="object")
+        {
+            this.self.dblclick(function () {
+                //Communication.abc(that.id);
+
+            });
+        }
     };
     /**
      *  inherit AbstractNode
@@ -177,11 +195,27 @@ define(function (require) {
         if(this.text==null)
         {
             this.text=GraphManager.text(this.location,text);
+            this.id=text;
         }
         else
         {
             this.text.attr({text:text});
+            this.id=text;
         }
+        return this;
+    };
+
+    Node.prototype.getID= function () {
+      return this.id;
+    };
+
+    Node.prototype.setLine=function(line){
+        this.line=line;
+        return this;
+    };
+
+    Node.prototype.setPredicateText=function(predicateText){
+        this.predicateText=predicateText;
         return this;
     };
 
@@ -192,17 +226,22 @@ define(function (require) {
     Node.prototype.getText= function () {
         return this.text;
     };
-    //Node.prototype.print= function () {
-    //  console.log(this.getType()+"\n");
-    //  for(var index in this.successors)
-    //  {
-    //      this.successors[index].print();
-    //  }
-    //};
 
-    //Node.prototype.paint= function(position,type) {
-    //   GraphManager.paint(position,type);
-    //};
+    Node.prototype.show= function () {
+        this.self.show();
+        this.text.show();
+        this.line.show();
+        this.predicateText.show();
+        return this;
+    };
+
+    Node.prototype.hide= function () {
+        this.self.hide();
+        this.text.hide();
+        this.line.hide();
+        this.predicateText.hide();
+        return this;
+    };
 
     return Node;
 

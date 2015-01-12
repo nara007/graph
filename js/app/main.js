@@ -91,28 +91,41 @@ require(["jquery", "bootstrap","app/drawGraph","tinyscrollbar","app/node","app/g
         e.preventDefault();
     });
 
-    var data=[{subject:"http://abc",predicate:"en",object:"abcen"},
-        {subject:"http://abc",predicate:"fr",object:"abcfr"},
-        {subject:"http://abc",predicate:"sl",object:"abcsl"},
-        {subject:"http://abc",predicate:"es",object:"abces"},
-        {subject:"http://abc",predicate:"it",object:"abcit"},
-        {subject:"http://abc",predicate:"cn",object:"abccn"},
-        {subject:"http://abc",predicate:"de",object:"abcde"},
-        {subject:"http://abc",predicate:"zx",object:"abczx"},
-        {subject:"http://abc",predicate:"zd",object:"abczd"},
-        {subject:"http://abc",predicate:"ze",object:"abcze"},
-        {subject:"http://abc",predicate:"zf",object:"abczf"},
-        {subject:"http://abc",predicate:"zg",object:"abczg"},
-        {subject:"http://abc",predicate:"zh",object:"abczh"},
-        {subject:"http://abc",predicate:"zi",object:"abczi"},
-        {subject:"http://abc",predicate:"zj",object:"abczj"},
-        {subject:"http://abc",predicate:"zk",object:"abczk"},
-        {subject:"http://abc",predicate:"zl",object:"abczl"},
-        {subject:"http://abc",predicate:"zm",object:"abczm"},
-        {subject:"http://abc",predicate:"zn",object:"abczn"}];
+    var data=[{subject:"http://abc",predicate:"predicate:en",object:"abcen"},
+        {subject:"http://abc",predicate:"predicate:fr",object:"abcfr"},
+        {subject:"http://abc",predicate:"predicate:sl",object:"abcsl"},
+        {subject:"http://abc",predicate:"predicate:es",object:"abces"},
+        {subject:"http://abc",predicate:"predicate:it",object:"abcit"},
+        {subject:"http://abc",predicate:"predicate:cn",object:"abccn"},
+        {subject:"http://abc",predicate:"predicate:de",object:"abcde"},
+        {subject:"http://abc",predicate:"predicate:zx",object:"abczx"},
+        {subject:"http://abc",predicate:"predicate:zd",object:"abczd"},
+        {subject:"http://abc",predicate:"predicate:ze",object:"abcze"},
+        {subject:"http://abc",predicate:"predicate:zf",object:"abczf"},
+        {subject:"http://abc",predicate:"predicate:zg",object:"abczg"},
+        {subject:"http://abc",predicate:"predicate:zh",object:"abczh"},
+        {subject:"http://abc",predicate:"predicate:zi",object:"abczi"},
+        {subject:"http://abc",predicate:"predicate:zj",object:"abczj"},
+        {subject:"http://abc",predicate:"predicate:zk",object:"abczk"},
+        {subject:"http://abc",predicate:"predicate:zl",object:"abczl"},
+        {subject:"http://abc",predicate:"predicate:zm",object:"abczm"},
+        {subject:"http://abc",predicate:"predicate:zn",object:"abczn"}];
+
+
+    var objectData=[{subject:"http://abc",predicate:"predicate:opg",object:"http://opg"},
+        {subject:"http://abc",predicate:"predicate:kng",object:"http://kng"},
+        {subject:"http://abc",predicate:"predicate:knh",object:"http://knh"},
+        {subject:"http://abc",predicate:"predicate:kni",object:"http://kni"},
+        {subject:"http://abc",predicate:"predicate:knj",object:"http://knj"},
+        {subject:"http://abc",predicate:"predicate:knk",object:"http://knk"},
+        {subject:"http://abc",predicate:"predicate:knl",object:"http://knl"},
+        {subject:"http://abc",predicate:"predicate:knm",object:"http://knm"},
+        {subject:"http://abc",predicate:"predicate:knn",object:"http://knn"},
+        {subject:"http://abc",predicate:"predicate:kno",object:"http://kno"},
+        {subject:"http://abc",predicate:"predicate:knp",object:"http://knp"}];
 
     //console.log(DrawGraph);
-    DrawGraph.drawLiterals(data);
+    DrawGraph.drawLiteralsAndObjects(data,objectData);
 
     //var node1=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"});
     //var node4=new Literal({location:{x:$(window).width()/1.6,y:300},type:"literal"});

@@ -38,12 +38,12 @@ define(function (require) {
     };
 
 
-    DrawGraph.prototype.drawLiterals= function (graphData) {
+    DrawGraph.prototype.drawLiteralsAndObjects= function (graphData,objectsData) {
 
         var that=this;
-        if(graphData==null||graphData=="undefined")
+        if(graphData==null&&objectsData==null)
         {
-            throw new Error("literal data is null or undefined!");
+            throw new Error(" data is null or undefined!");
         }
         else
         {
@@ -55,22 +55,21 @@ define(function (require) {
             }
             else
             {
-                activeNode=NodeManager.add(graphData);
+                activeNode=NodeManager.add(graphData,objectsData);
             }
 
             var literals=activeNode.getLiterals();
             var literalNum=literals.size();
-            var pageNum=Math.ceil(literalNum/NodeManager.getMaxLiteralPreAge());
-            alert(pageNum);
+            var literalpageNum=Math.ceil(literalNum/NodeManager.getMaxLiteralPreAge());
 
-            var myArray = new Array();
+            var literalArray = new Array();
 
-            var set=new Array();
+            var literalSet=new Array();
             (function (){
 
-                for(var i=0;i<pageNum;i++)
+                for(var i=0;i<literalpageNum;i++)
                 {
-                    myArray.push(new Array());
+                    literalArray.push(new Array());
                 }
             }());
 
@@ -79,20 +78,20 @@ define(function (require) {
 
                 for(var i in literals.items)
                 {
-                    set.push(literals.items[i]);
+                    literalSet.push(literals.items[i]);
                 }
             }());
 
             (function (){
 
-                for(var i=0;i<pageNum;i++)
+                for(var i=0;i<literalpageNum;i++)
                 {
                    for(var j=0;j<NodeManager.getMaxLiteralPreAge();j++)
                    {
-                       var literalObject=set.pop();
+                       var literalObject=literalSet.pop();
                        if(literalObject!=undefined)
                        {
-                           myArray[i].push(literalObject);
+                           literalArray[i].push(literalObject);
                        }
                        else
                        {
@@ -103,7 +102,52 @@ define(function (require) {
                 }
             }());
 
-            NodeManager.setliteralsPage(myArray);
+            var objects=activeNode.getObjects();
+            var objectNum=objects.size();
+            var objectPageNum=Math.ceil(objectNum/NodeManager.getMaxObjectPreAge());
+
+            var objectArray = new Array();
+            var objectSet=new Array();
+
+            (function (){
+
+                for(var i=0;i<objectPageNum;i++)
+                {
+                    objectArray.push(new Array());
+                }
+            }());
+
+            (function (){
+
+                for(var i in objects.items)
+                {
+                    objectSet.push(objects.items[i]);
+                }
+            }());
+
+            (function (){
+
+                for(var i=0;i<objectPageNum;i++)
+                {
+                    for(var j=0;j<NodeManager.getMaxObjectPreAge();j++)
+                    {
+                        var object=objectSet.pop();
+                        if(object!=undefined)
+                        {
+                            objectArray[i].push(object);
+                        }
+                        else
+                        {
+
+                        }
+
+                    }
+                }
+            }());
+
+            NodeManager.setliteralsPage(literalArray);
+            NodeManager.setObjectsPage(objectArray);
+
         }
 
     };
