@@ -9,7 +9,8 @@ requirejs.config({
         "bootstrap":"bootstrap/bootstrap",
         "Hashtabel": "jquery/jsHashtable",
         "raphael":"raphael/raphael",
-        "tinyscrollbar":"tinyscrollbar/jquery.tinyscrollbar.min"
+        "tinyscrollbar":"tinyscrollbar/jquery.tinyscrollbar.min",
+        "DoubleList":"doubleList/doubleList"
     },
     shim : {
         "bootstrap" : { "deps" :['jquery'] }

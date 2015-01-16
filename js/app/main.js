@@ -72,7 +72,7 @@
 //    //alert(demo.get("daming")+" "+demo.get("xiaoming")+" "+demo.get("xiaoqiang"));
 //});
 
-require(["jquery", "bootstrap","app/drawGraph","tinyscrollbar","app/node","app/graphManager","app/literal"], function ($,_,DrawGraph,abc,Node,GraphManager,Literal){
+require(["jquery", "bootstrap","app/nodeManager","tinyscrollbar","app/node","app/graphManager","app/literal"], function ($,_,NodeManager,abc,Node,GraphManager,Literal){
 
     $("#submit").bind("click",function(){
         alert("abc");
@@ -125,7 +125,7 @@ require(["jquery", "bootstrap","app/drawGraph","tinyscrollbar","app/node","app/g
         {subject:"http://abc",predicate:"predicate:knp",object:"http://knp"}];
 
     //console.log(DrawGraph);
-    DrawGraph.drawLiteralsAndObjects(data,objectData);
+    NodeManager.drawLiteralsAndObjects(data,objectData);
 
     //var node1=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"});
     //var node4=new Literal({location:{x:$(window).width()/1.6,y:300},type:"literal"});

@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 14-12-17.
  */
-define(function (require) {
+define(function (require){
     var AbstractNode=require("app/abstractNode"),
         GraphManager=require("app/graphManager"),
         $=require("jquery"),
@@ -21,6 +21,16 @@ define(function (require) {
         this.objects=new $.Hashtable();
         this.text=null;
         this.self=null;
+
+        this.activeSelf=null;
+        this.activeText=null;
+
+        this.historySelf=null;
+        this.historyText=null;
+
+        this.currentSelf=null;
+
+        this.lineToBlank=null;
         this.line=null;
         this.predicateText=null;
         this.id=null;
@@ -28,6 +38,8 @@ define(function (require) {
         {
             this.width=160;
             this.height=60;
+            this.activeSelf=GraphManager.paint(this.location,this.type);
+            this.currentSelf=this.activeSelf;
         }
         else if(this.type=="history")
         {
@@ -38,6 +50,8 @@ define(function (require) {
         {
             this.width=160;
             this.height=60;
+            this.self=GraphManager.paint(this.location,this.type);
+            this.currentSelf=this.self;
         }
         else if(this.type=="blank")
         {
@@ -52,27 +66,18 @@ define(function (require) {
             throw new Error("Literal node must not have child node");
         }
         var that=this;
-        this.self=GraphManager.paint(this.location,this.type);
+        //this.self=GraphManager.paint(this.location,this.type);
         /**
          * right click event
          */
-        this.self.attr("cursor","pointer").mouseup(function (e) {
-            if(e.which==3)
-            {
-                MenuManager.createMenu.call(that.self,e);
-            }
-        });
+        //this.self.attr("cursor","pointer").mouseup(function (e) {
+        //    if(e.which==3)
+        //    {
+        //        MenuManager.createMenu.call(that.self,e);
+        //    }
+        //});
 
-        /**
-         * double click make current object node active
-         */
-        if(this.type=="object")
-        {
-            this.self.dblclick(function () {
-                //Communication.abc(that.id);
 
-            });
-        }
     };
     /**
      *  inherit AbstractNode
@@ -96,10 +101,25 @@ define(function (require) {
     };
     Node.prototype.setLocation= function (location) {
         this.location=location;
+        //this.self.attr(x:location.x,);
         return this;
     };
     Node.prototype.getLocation= function () {
-        return this.location;
+
+        if(this.type=="blank")
+        {
+            return {x:930,y:150};
+        }
+        else
+        {
+            if(this.currentSelf==this.activeSelf)
+            {
+                return {x:$(window).width()/2-100,y:150};
+            }
+            else
+                return this.location;
+        }
+
     };
 
     /**
@@ -228,21 +248,150 @@ define(function (require) {
     };
 
     Node.prototype.show= function () {
-        this.self.show();
-        this.text.show();
-        this.line.show();
-        this.predicateText.show();
+        if(this.currentSelf==this.self)
+        {
+            this.self.show();
+            if(this.text)
+            {
+                this.text.show();
+            }
+            if(this.line)
+            {
+                this.line.show();
+            }
+            if(this.predicateText)
+            {
+                this.predicateText.show();
+            }
+        }
+        else if(this.currentSelf==this.activeSelf)
+        {
+            this.activeSelf.show();
+            if(this.activeText)
+            {
+                this.activeText.show();
+            }
+            if(this.lineToBlank)
+            {
+                this.lineToBlank.show();
+            }
+        }
+
+        else if(this.currentSelf==this.historySelf)
+        {
+            this.historySelf.show();
+            if(this.historyText)
+            {
+                this.historyText.show();
+            }
+        }
+        else
+        {
+            alert("TODO");
+        }
         return this;
     };
 
     Node.prototype.hide= function () {
-        this.self.hide();
-        this.text.hide();
-        this.line.hide();
-        this.predicateText.hide();
+        if(this.currentSelf==this.self)
+        {
+            this.self.hide();
+            if(this.text)
+            {
+                this.text.hide();
+            }
+            if(this.line)
+            {
+                this.line.hide();
+            }
+            if(this.predicateText)
+            {
+                this.predicateText.hide();
+            }
+        }
+
+        else if(this.currentSelf==this.activeSelf)
+        {
+            this.activeSelf.hide();
+            if(this.activeText)
+            {
+                this.activeText.hide();
+            }
+            if(this.lineToBlank)
+            {
+                this.lineToBlank.hide();
+            }
+        }
+
+        else if(this.currentSelf==this.historySelf)
+        {
+            this.historySelf.hide();
+            if(this.historyText)
+            {
+                this.historyText.hide();
+            }
+        }
+        else
+        {
+            alert("TODO");
+        }
+
         return this;
     };
 
+    Node.prototype.getRaphaelObject= function () {
+        return this.currentSelf;
+    };
+
+    Node.prototype.remove= function () {
+        if(this.type=="object") {
+            this.hide();
+        }
+        else if(this.type=="active")
+        {
+            this.hide();
+            for(var i in this.objects.items)
+            {
+                this.objects.items[i].remove();
+            }
+
+            for(var j in this.literals.items)
+            {
+                this.literals.items[j].remove();
+            }
+        }
+
+        return this;
+    };
+
+    Node.prototype.setActive= function(){
+
+        if(this.activeSelf==null)
+        {
+            this.activeSelf=GraphManager.paint({x:$(window).width()/2-100,y:150},"active");
+            this.activeText=GraphManager.text({x:$(window).width()/2-100,y:150},this.id);
+        }
+        this.currentSelf=this.activeSelf;
+        this.setType("active");
+        this.show();
+        return this;
+    };
+
+    Node.prototype.setHistory= function () {
+        if(this.historySelf==null)
+        {
+            this.historySelf=GraphManager.paint({x:200,y:200},"history");
+            this.historyText=GraphManager.text({x:200,y:200},this.id);
+        }
+        this.currentSelf=this.historySelf;
+        this.setType("history");
+        this.show();
+        return this;
+    };
+
+    Node.prototype.setLineToBlank= function (line) {
+      this.lineToBlank=line;
+    };
     return Node;
 
 });

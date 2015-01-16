@@ -95,6 +95,10 @@ define(function (require) {
 
         return this.self;
     };
+
+    Literal.prototype.remove= function () {
+        this.hide();
+    };
     return Literal;
 
 });
