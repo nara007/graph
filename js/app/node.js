@@ -27,6 +27,7 @@ define(function (require){
 
         this.historySelf=null;
         this.historyText=null;
+        this.historyDoubleClick=false;
 
         this.currentSelf=null;
 
@@ -157,6 +158,8 @@ define(function (require){
             throw new Error(predicate+" does not exist!");
         }
     };
+
+
     /**
      * remove a subnode from the container of a node
      * @param predicate
@@ -273,6 +276,13 @@ define(function (require){
             }
             if(this.lineToBlank)
             {
+                //if(this.objects.size()==0)
+                //{
+                //    this.lineToBlank.hide();
+                //}
+                //else {
+                //
+                //}
                 this.lineToBlank.show();
             }
         }
@@ -320,6 +330,7 @@ define(function (require){
             if(this.lineToBlank)
             {
                 this.lineToBlank.hide();
+                //console.log("lineToBlank yincang von"+ this.getID());
             }
         }
 
@@ -386,11 +397,19 @@ define(function (require){
         this.currentSelf=this.historySelf;
         this.setType("history");
         this.show();
+        this.clear();
+        this.lineToBlank.remove();
         return this;
     };
 
     Node.prototype.setLineToBlank= function (line) {
-      this.lineToBlank=line;
+        this.lineToBlank=line;
+    };
+
+
+    Node.prototype.clear= function () {
+        this.literals.clear();
+        this.objects.clear();
     };
     return Node;
 

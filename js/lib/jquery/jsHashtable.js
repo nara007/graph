@@ -58,7 +58,7 @@ define(["jquery"], function ($) {
         this.clear = function()
         {
             this.items=new Array();
-            itemsCount=0;
+            this.itemsCount=0;
         };
         this.size = function()
         {

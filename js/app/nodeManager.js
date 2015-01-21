@@ -99,6 +99,7 @@ define(function (require) {
                 else
                 {
                     that.currentLiteralPage++;
+                    console.log(that.literalArrayData.length);
                 }
                 that.refreshLiteralData();
             }
@@ -200,13 +201,13 @@ define(function (require) {
         return this.maxObjectPreAge;
     };
 
-    NodeManager.prototype.contains= function (nodeID) {
-        return this.nodeHashMap.containsKey(nodeID);
-    };
+    //NodeManager.prototype.contains= function (nodeID) {
+    //    return this.nodeHashMap.containsKey(nodeID);
+    //};
 
-    NodeManager.prototype.get= function (key) {
-        this.nodeHashMap.get(key);
-    };
+    //NodeManager.prototype.get= function (key) {
+    //    this.nodeHashMap.get(key);
+    //};
 
 
     /**
@@ -214,46 +215,49 @@ define(function (require) {
      * @param nodeManager
      * @constructor
      */
-    var SetdblclickForNode= function (nodeManager) {
+    var SetdblclickForObject= function (nodeManager) {
         var that=this;
         this.getRaphaelObject().dblclick(function () {
 
-            var literals=Communication.getLiterals(that.getID());
-            var objects=Communication.getObjects(that.getID());
-            if(literals==null&&objects==null)
-            {
-                //console.log(that.getID()+" has no literals and objects");
-                alert(that.getID()+" has no literals and objects");
-            }
-            else {
-                nodeManager.activeNode.remove();
-                nodeManager.addOneHistoryNode(nodeManager.activeNode);
-
-                nodeManager.setliteralsPage(null);
-                nodeManager.setObjectsPage(null);
-                nodeManager.literalsPageUpManager.hide();
-                nodeManager.literalsPageDownManager.hide();
-                nodeManager.objectsPageUpManager.hide();
-                nodeManager.objectsPageDownManager.hide();
-                nodeManager.setActiveNode(that);
-                nodeManager.drawLiteralsAndObjects(literals, objects);
-
-            }
+            nodeManager.setActiveNode(that);
+            nodeManager.addOneHistoryNode(that.getPredecessor());
+            //console.log("zengjiahou "+nodeManager.historyDoubleList.getListHead());
         });
     };
 
-    NodeManager.prototype.add= function (literalData,objectsData) {
+    var SetdblclickForHistory= function (nodeManager) {
+        var that=this;
 
-        var subject=literalData[0].subject;
+        if(this.historyDoubleClick==false)
+        {
+            this.getRaphaelObject().dblclick(function () {
+
+                hideAllHistoryData.call(nodeManager);
+                nodeManager.historyDoubleList.removeFrom(that);
+
+                nodeManager.setHistoryPage(scanAndRelocateHistoryList.call(nodeManager,nodeManager.historyDoubleList));
+                nodeManager.setActiveNode(that);
+
+            });
+            this.historyDoubleClick=true;
+        }
+
+    };
+
+    NodeManager.prototype.add= function (literalData,objectsData,nodeID) {
+
+        //var subject=literalData[0].subject;
+        var subject=nodeID;
         if(this.activeNode==null)
         {
             this.activeNode=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"}).setText(subject);
         }
-        this.nodeHashMap.add(subject,this.activeNode);
+        //this.nodeHashMap.add(subject,this.activeNode);
         var that=this;
         if(literalData!=null)
         {
             var literalsArray=new Array();
+            this.activeNode.clear();
             for(var index=0;index< literalData.length;index++)
             {
                 var result = index % this.maxLiteralPreAge;
@@ -279,6 +283,8 @@ define(function (require) {
             var objectsArray=new Array();
             var blankNode=new Node({location:{x:930,y:150},type:"blank"});
             var lineToBlank=GraphManager.line(this.activeNode,blankNode);
+
+            //console.log("lineToBlank chuangjian von"+this.activeNode.getID());
             this.activeNode.setLineToBlank(lineToBlank);
             for(var j=0;j< objectsData.length;j++)
             {
@@ -287,7 +293,7 @@ define(function (require) {
                 /**
                  * double click make current object node active
                  */
-                SetdblclickForNode.call(objectsArray[j],that);
+                SetdblclickForObject.call(objectsArray[j],that);
 
                 this.activeNode.addNode(objectsArray[j].setText(objectsData[j].object)
                     .setLine(GraphManager.line(blankNode,objectsArray[j]))
@@ -365,6 +371,7 @@ define(function (require) {
 
     NodeManager.prototype.setliteralsPage= function (literalsArray) {
         this.literalArrayData=literalsArray;
+        this.currentLiteralPage=0;
         if(this.literalArrayData!=null) {
             showNodeOfCurrentPage.call(this.literalArrayData[0], this.maxLiteralPreAge);
         }
@@ -374,6 +381,7 @@ define(function (require) {
     NodeManager.prototype.setObjectsPage= function (objectsArray) {
 
         this.objectArrayData=objectsArray;
+        this.currentObjectPage=0;
         if(this.objectArrayData!=null) {
             showNodeOfCurrentPage.call(this.objectArrayData[0], this.maxObjectPreAge);
         }
@@ -407,39 +415,36 @@ define(function (require) {
         return this;
     };
 
-    NodeManager.prototype.setActiveNode= function (node) {
 
-        this.activeNode=node;
-        node.setActive();
-        return this;
-    };
 
     NodeManager.prototype.getActiveNode= function () {
 
         return this.activeNode;
     };
 
-    NodeManager.prototype.drawLiteralsAndObjects= function (literalData,objectsData) {
+    NodeManager.prototype.drawLiteralsAndObjects= function (literalData,objectsData,nodeID) {
         var that=this;
-        if(literalData==null&&objectsData==null)
-        {
-            throw new Error(" This node has no literals and objects");
-        }
-        else
-        {
+        //if(literalData==null&&objectsData==null)
+        //{
+        //    throw new Error(" This node has no literals and objects");
+        //}
+        //else
+        //{
             var activeNode;
-            var statement=literalData[0];
-            if(this.contains(statement.subject))
-            {
-                activeNode=this.get(statement.subject);
-            }
-            else
-            {
-                activeNode=this.add(literalData,objectsData);
-            }
+            //var statement=literalData[0];
+            //if(this.contains(statement.subject))
+            //{
+            //    activeNode=this.get(statement.subject);
+            //}
+            //else
+            //{
+            //    activeNode=this.add(literalData,objectsData);
+            //}
+            activeNode=this.add(literalData,objectsData,nodeID);
 
             var literals=activeNode.getLiterals();
             var literalNum=literals.size();
+        console.log("literalNum "+literalNum);
             if(literalNum!=0)
             {
             var literalpageNum=Math.ceil(literalNum/that.getMaxLiteralPreAge());
@@ -542,7 +547,7 @@ define(function (require) {
             this.setliteralsPage(literalArray);
             this.setObjectsPage(objectArray);
 
-        }
+        //}
 
     };
 
@@ -551,6 +556,10 @@ define(function (require) {
         if(historyList==null)
         {
             throw new Error("historyList is null");
+        }
+        if(historyList.size()==0)
+        {
+
         }
         else
         {
@@ -619,7 +628,30 @@ define(function (require) {
         this.historyPageDownManager.show();
         this.historyDoubleList.add(node);
         node.setHistory();
+        SetdblclickForHistory.call(node,this);
         this.setHistoryPage(scanAndRelocateHistoryList.call(this,this.historyDoubleList));
+    };
+
+    NodeManager.prototype.setActiveFromHistory= function (historyNode) {
+
+    };
+
+    NodeManager.prototype.setActiveNode= function (node) {
+        var literals=Communication.getLiterals(node.getID());
+        var objects=Communication.getObjects(node.getID());
+        this.activeNode.remove();
+
+        this.setliteralsPage(null);
+        this.setObjectsPage(null);
+        this.literalsPageUpManager.hide();
+        this.literalsPageDownManager.hide();
+        this.objectsPageUpManager.hide();
+        this.objectsPageDownManager.hide();
+        this.activeNode=node;
+        node.setActive();
+        this.drawLiteralsAndObjects(literals, objects,node.getID());
+
+        return this;
     };
 
     return NodeManager.getInstance();

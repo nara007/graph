@@ -125,7 +125,7 @@ require(["jquery", "bootstrap","app/nodeManager","tinyscrollbar","app/node","app
         {subject:"http://abc",predicate:"predicate:knp",object:"http://knp"}];
 
     //console.log(DrawGraph);
-    NodeManager.drawLiteralsAndObjects(data,objectData);
+    NodeManager.drawLiteralsAndObjects(data,objectData,"http://abc");
 
     //var node1=new Node({location:{x:$(window).width()/2-100,y:150},type:"active"});
     //var node4=new Literal({location:{x:$(window).width()/1.6,y:300},type:"literal"});
