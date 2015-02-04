@@ -9,7 +9,8 @@ define(function (require) {
         Literal=require("app/literal"),
         GraphManager=require("app/graphManager"),
         Communication=require("app/communication"),
-        DoubleList=require("DoubleList");
+        DoubleList=require("DoubleList"),
+        MenuManager=require("app/rightClickMenu");
 
     var instance=null;
 
@@ -225,6 +226,21 @@ define(function (require) {
         });
     };
 
+    var SetRightClickForObject=function(){
+        var that=this;
+        this.getRaphaelObject().mousedown(function(e){
+            if (e.which == 1)
+            {
+                alert("hallo franz");
+            }
+            else if(e.which == 3)
+            {
+                MenuManager.createObjectMenu.call(that.self,e);
+            }
+
+        });
+    };
+
     var SetdblclickForHistory= function (nodeManager) {
         var that=this;
 
@@ -294,6 +310,7 @@ define(function (require) {
                  * double click make current object node active
                  */
                 SetdblclickForObject.call(objectsArray[j],that);
+                SetRightClickForObject.call(objectsArray[j]);
 
                 this.activeNode.addNode(objectsArray[j].setText(objectsData[j].object)
                     .setLine(GraphManager.line(blankNode,objectsArray[j]))

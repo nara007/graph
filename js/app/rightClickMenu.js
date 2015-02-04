@@ -52,7 +52,7 @@ define(function (require) {
      * create a contextmenu for a existing node
      * @param e (event contains location of the event)
      */
-    MenuManager.prototype.createMenu= function (e) {
+    MenuManager.prototype.createObjectMenu= function (e) {
 
         var paper=GraphManager.getCanvas();
 
@@ -62,38 +62,38 @@ define(function (require) {
         var menu = paper.rect(e.pageX, e.pageY,208,90);
         menu.attr({stroke:"#BABABA", fill:"white", opacity:1.0});
         var sub_group_1 = paper.rect(e.pageX, e.pageY,208,30);
-        var sub_group_2 = paper.rect(e.pageX, e.pageY + 30,208,30);
-        var sub_group_3 = paper.rect(e.pageX, e.pageY + 60,208,30);
+        //var sub_group_2 = paper.rect(e.pageX, e.pageY + 30,208,30);
+        //var sub_group_3 = paper.rect(e.pageX, e.pageY + 60,208,30);
 
         sub_group_1.attr({fill:'white', opacity:0});
-        sub_group_2.attr({fill:'white', opacity:0});
-        sub_group_3.attr({fill:'white', opacity:0});
+        //sub_group_2.attr({fill:'white', opacity:0});
+        //sub_group_3.attr({fill:'white', opacity:0});
 
-        var text_1 = paper.text(e.pageX + 50, e.pageY + 15, "Zoom in");
+        var text_1 = paper.text(e.pageX + 50, e.pageY + 15, "Edit Object");
         text_1.attr({"font-family": "Consolas",
             "text-anchor":"start",
             fill:'black',
             "font-size": 14});
 
-        var text_2 = paper.text(e.pageX + 50, e.pageY + 45, "Delete");
-        text_2.attr({"font-family": "Consolas",
-            "text-anchor":"start",
-            fill:'black',
-            "font-size": 14});
-
-        var text_Cancel = paper.text(e.pageX + 50, e.pageY + 75, "Cancel");
-        text_Cancel.attr({"font-family": "Consolas",
-            "text-anchor":"start",
-            fill:'black',
-            "font-size": 14});
+        //var text_2 = paper.text(e.pageX + 50, e.pageY + 45, "Delete");
+        //text_2.attr({"font-family": "Consolas",
+        //    "text-anchor":"start",
+        //    fill:'black',
+        //    "font-size": 14});
+        //
+        //var text_Cancel = paper.text(e.pageX + 50, e.pageY + 75, "Cancel");
+        //text_Cancel.attr({"font-family": "Consolas",
+        //    "text-anchor":"start",
+        //    fill:'black',
+        //    "font-size": 14});
 
         group.push(sub_group_1);
-        group.push(sub_group_2);
-        group.push(sub_group_3);
+        //group.push(sub_group_2);
+        //group.push(sub_group_3);
         group.push(menu);
         group.push(text_1);
-        group.push(text_2);
-        group.push(text_Cancel);
+        //group.push(text_2);
+        //group.push(text_Cancel);
         /**
          * set hover effect of items of the contextmenu
          * @param target (items of contextmenu)
@@ -114,8 +114,8 @@ define(function (require) {
 
 
         bind(sub_group_1);
-        bind(sub_group_2);
-        bind(sub_group_3);
+        //bind(sub_group_2);
+        //bind(sub_group_3);
 
         /**
          * bind click event for items of contextmenu
@@ -125,13 +125,13 @@ define(function (require) {
             removeMenu();
         });
 
-        sub_group_2.click(function () {
-            alert("TODU");
-            removeMenu();
-        });
-        sub_group_3.click(function () {
-            removeMenu();
-        });
+        //sub_group_2.click(function () {
+        //    alert("TODU");
+        //    removeMenu();
+        //});
+        //sub_group_3.click(function () {
+        //    removeMenu();
+        //});
     };
 
     return MenuManager.getInstance();
